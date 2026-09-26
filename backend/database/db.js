@@ -48,7 +48,7 @@ const saveStoreToDisk = () => {
   try {
     fs.writeFileSync(jsonDbPath, JSON.stringify(store, null, 2), 'utf8');
   } catch (e) {
-    console.error('Error saving store to disk:', e);
+    // Read-only filesystem in serverless environments
   }
 };
 
