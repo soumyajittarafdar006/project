@@ -61,8 +61,13 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal Server Error', message: err.message });
 });
 
-server.listen(PORT, () => {
-  console.log(`🚀 ESP32 Temperature Monitor Backend running on http://localhost:${PORT}`);
-  console.log(`📡 WebSocket server initialized`);
-  console.log(`🌡️  Ready to accept POST data at http://localhost:${PORT}/api/sensor/data`);
-});
+// Only listen if not running as a Vercel serverless function
+if (!process.env.VERCEL) {
+  server.listen(PORT, () => {
+    console.log(`🚀 ESP32 Temperature Monitor Backend running on http://localhost:${PORT}`);
+    console.log(`📡 WebSocket server initialized`);
+    console.log(`🌡️  Ready to accept POST data at http://localhost:${PORT}/api/sensor/data`);
+  });
+}
+
+module.exports = app;
